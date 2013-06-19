@@ -1,0 +1,32 @@
+// dF/F image stack, James B. Ackman 2012-02-14
+// this macro will (1) reduce an open image stack in half
+// (2) create an average image in the z-dimension (time dimension)
+// (3) calc dF/F image stack
+
+//selectImage(1);
+name1=getTitle;
+n = nSlices; 
+//run("Size...", "width=348 height=256 depth=n constrain interpolation=Bicubic");
+run("Z Project...", "start=1 stop=n projection=[Average Intensity]");
+//selectImage(2);
+name2=getTitle;
+imageCalculator("Subtract create 32-bit stack", name1,name2);
+//selectImage(3);
+name3=getTitle;
+run("Fire");
+// If you have a custom LUT named "heat-map" (like "jet" from MATLAB) you can uncomment the following line
+//run("heat-map");
+imageCalculator("Divide create 32-bit stack", name3,name2);
+//selectImage(4);
+name4=getTitle;
+doCommand("Start Animation [\\]");
+//run("8-bit");
+//run("AVI... ", "compression=JPEG frame=50 save=myMovie.avi");
+
+//close(name2);
+//close(name3);
+//close();
+//close();
+ 
+ 
+ 
