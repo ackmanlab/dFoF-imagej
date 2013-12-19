@@ -5,8 +5,11 @@
 
 //selectImage(1);
 name1=getTitle;
-n = nSlices; 
-//run("Size...", "width=348 height=256 depth=n constrain interpolation=Bicubic");
+n = nSlices;
+w = getWidth/2;
+h = getHeight/2;
+// If you want to downsample the movie uncomment the following line:
+//run("Size...", "width=w height=h depth=n constrain interpolation=None");
 run("Z Project...", "start=1 stop=n projection=[Average Intensity]");
 //selectImage(2);
 name2=getTitle;
