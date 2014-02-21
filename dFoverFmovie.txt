@@ -1,35 +1,63 @@
-// dF/F image stack, James B. Ackman 2012-02-14
+//dF/F image stack, James B. Ackman 2012-02-14, update 2014-02-21 09:44:13
 // this macro will (1) reduce an open image stack in half
-// (2) create an average image in the z-dimension (time dimension)
+// (2) create an average image in the z-dimension
 // (3) calc dF/F image stack
+// Uncomment the lines 19 run("Size..." ...) as well as the filenames at line 12,30 if you want to downsample the movie size
 
-//selectImage(1);
 name1=getTitle;
+//selectWindow(name1)
+directory=getInfo("image.directory"); 
+//name=getInfo("image.filename"); 
+nn=replace(name1, ".tif", "-dFoF-50fps.avi"); 
+//nn=replace(name1, ".tif", "-dFoF-50fps-halfsz.avi"); 
+fnm=directory+nn; 
+//print(fnm)
+
 n = nSlices;
 w = getWidth/2;
 h = getHeight/2;
-// If you want to downsample the movie uncomment the following line:
-//run("Size...", "width=w height=h depth=n constrain interpolation=None");
+//run("Size...", "width=w height=h depth=n constrain interpolation=None");  
 run("Z Project...", "start=1 stop=n projection=[Average Intensity]");
-//selectImage(2);
 name2=getTitle;
 imageCalculator("Subtract create 32-bit stack", name1,name2);
-//selectImage(3);
 name3=getTitle;
-run("Fire");
-// If you have a custom LUT named "heat-map" (like "jet" from MATLAB) you can uncomment the following line
-//run("heat-map");
+run("heat-map");
 imageCalculator("Divide create 32-bit stack", name3,name2);
-//selectImage(4);
 name4=getTitle;
-doCommand("Start Animation [\\]");
-//run("8-bit");
-//run("AVI... ", "compression=JPEG frame=50 save=myMovie.avi");
 
+selectWindow(name2)
+nn=replace(name1, ".tif", "_AVG.tif");
+//nn=replace(name1, ".tif", "_AVG-halfsz.tif");
+fnm2=directory+nn;
+saveAs("Tiff", fnm2);
+name2=getTitle;
+
+selectWindow(name4)
+//run("8-bit");
+
+Stack.getStatistics(voxelCount, mean, min, max, stdDev)
+print("stats");
+print("   voxels: "+voxelCount);
+print("   min: "+min);
+print("   max: "+max);
+print("   mean: "+mean);
+print("   std dev: "+stdDev);
+newMin=-3*stdDev
+newMax=6*stdDev
+print("   new min: "+newMin);
+print("   new max: "+newMax);
+
+//getMinAndMax(min, max)
+//print("   min: "+min);
+//print("   max: "+max);
+
+//run("Brightness/Contrast...");
+setMinAndMax(newMin, newMax)
+
+run("AVI... ", "compression=JPEG frame=50 save=&fnm");
+doCommand("Start Animation [\\]");
+
+close(name1);
 //close(name2);
-//close(name3);
-//close();
-//close();
- 
- 
- 
+close(name3);
+//close(name4);
