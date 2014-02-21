@@ -2,7 +2,9 @@
 // this macro will (1) reduce an open image stack in half
 // (2) create an average image in the z-dimension
 // (3) calc dF/F image stack
-// Uncomment the lines 19 run("Size..." ...) as well as the filenames at line 12,30 if you want to downsample the movie size
+// Uncomment the lines 21 run("Size..." ...) as well as the filenames at line 14,32 if you want to downsample the movie size
+// To run without the autosave option, comment out the lines 62
+// Comment out lines 41-58 if you don't want to auto adjust the contrast
 
 name1=getTitle;
 //selectWindow(name1)
@@ -26,14 +28,15 @@ imageCalculator("Divide create 32-bit stack", name3,name2);
 name4=getTitle;
 
 selectWindow(name2)
-nn=replace(name1, ".tif", "_AVG.tif");
-//nn=replace(name1, ".tif", "_AVG-halfsz.tif");
-fnm2=directory+nn;
+nn2=replace(name1, ".tif", "_AVG.tif");
+//nn2=replace(name1, ".tif", "_AVG-halfsz.tif");
+fnm2=directory+nn2;
 saveAs("Tiff", fnm2);
 name2=getTitle;
 
 selectWindow(name4)
-//run("8-bit");
+rename(nn)
+name4=getTitle;
 
 Stack.getStatistics(voxelCount, mean, min, max, stdDev)
 print("stats");
@@ -43,21 +46,22 @@ print("   max: "+max);
 print("   mean: "+mean);
 print("   std dev: "+stdDev);
 newMin=-3*stdDev
-newMax=6*stdDev
-print("   new min: "+newMin);
-print("   new max: "+newMax);
-
-//getMinAndMax(min, max)
-//print("   min: "+min);
-//print("   max: "+max);
+newMax=7*stdDev
+//print("   new min: "+newMin);
+//print("   new max: "+newMax);
 
 //run("Brightness/Contrast...");
 setMinAndMax(newMin, newMax)
 
+getMinAndMax(min, max)
+print("   new min: "+min);
+print("   new max: "+max);
+
+close(name1);
+close(name3);
+
 run("AVI... ", "compression=JPEG frame=50 save=&fnm");
 doCommand("Start Animation [\\]");
 
-close(name1);
 //close(name2);
-close(name3);
 //close(name4);
