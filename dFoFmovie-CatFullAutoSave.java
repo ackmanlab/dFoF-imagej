@@ -58,7 +58,7 @@ name2=getTitle();
 
 imageCalculator("Subtract create 32-bit stack", name1,name2);
 name3=getTitle();
-run("heat-map");
+run("Jet");
 imageCalculator("Divide create 32-bit stack", name3,name2);
 name4=getTitle();
 selectWindow(name4);
