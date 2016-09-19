@@ -6,6 +6,9 @@
 // To run without the autosave option, comment out the lines 62
 // Comment out lines 41-58 if you don't want to auto adjust the contrast
 
+useDialogBox = 1; // disable this if you'd prefer not to have a dialog box to select slice
+
+
 name1=getTitle;
 //selectWindow(name1)
 directory=getInfo("image.directory"); 
@@ -20,17 +23,20 @@ w = getWidth/2;
 h = getHeight/2;
 //run("Size...", "width=w height=h depth=n constrain interpolation=None");  
 
+if (useDialogBox == 1) {
+	Dialog.create("Set dFoF Frame Range"); 
+	Dialog.addMessage("Set Start and End Frames"); 
+	Dialog.addNumber("Start:", 1); 
+	Dialog.addNumber("End:", n); 
+	Dialog.show(); 
+	startval = Dialog.getNumber(); 
+	endval = Dialog.getNumber(); 
+}
+else {
+	startval = 1;
+	endval = n;
+}
 
-Dialog.create("Set dFoF Frame Range"); 
-Dialog.addMessage("Set Start and End Frames"); 
-Dialog.addNumber("Start:", 1); 
-Dialog.addNumber("End:", n); 
-Dialog.show(); 
-startval = Dialog.getNumber(); 
-endval = Dialog.getNumber(); 
-
-startval = 1;
-endval = 100;
 run("Z Project...", "start=" + startval + " stop=" + endval + " projection=[Average Intensity]");
 name2=getTitle;
 imageCalculator("Subtract create 32-bit stack", name1,name2);
@@ -39,33 +45,33 @@ run("Jet");
 imageCalculator("Divide create 32-bit stack", name3,name2);
 name4=getTitle;
 
-selectWindow(name2)
+selectWindow(name2);
 nn2=replace(name1, ".tif", "_AVG.tif");
 //nn2=replace(name1, ".tif", "_AVG-halfsz.tif");
 fnm2=directory+nn2;
 saveAs("Tiff", fnm2);
 name2=getTitle;
 
-selectWindow(name4)
-rename(nn)
+selectWindow(name4);
+rename(nn);
 name4=getTitle;
 
-Stack.getStatistics(voxelCount, mean, min, max, stdDev)
+Stack.getStatistics(voxelCount, mean, min, max, stdDev);
 print("stats");
 print("   voxels: "+voxelCount);
 print("   min: "+min);
 print("   max: "+max);
 print("   mean: "+mean);
 print("   std dev: "+stdDev);
-newMin=-3*stdDev
-newMax=7*stdDev
+newMin=-3*stdDev;
+newMax=7*stdDev;
 //print("   new min: "+newMin);
 //print("   new max: "+newMax);
 
 //run("Brightness/Contrast...");
-setMinAndMax(newMin, newMax)
+setMinAndMax(newMin, newMax);
 
-getMinAndMax(min, max)
+getMinAndMax(min, max);
 print("   new min: "+min);
 print("   new max: "+max);
 
