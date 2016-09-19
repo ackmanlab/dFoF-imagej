@@ -19,7 +19,19 @@ n = nSlices;
 w = getWidth/2;
 h = getHeight/2;
 //run("Size...", "width=w height=h depth=n constrain interpolation=None");  
-run("Z Project...", "start=1 stop=n projection=[Average Intensity]");
+
+
+Dialog.create("Set dFoF Frame Range"); 
+Dialog.addMessage("Set Start and End Frames"); 
+Dialog.addNumber("Start:", 1); 
+Dialog.addNumber("End:", n); 
+Dialog.show(); 
+startval = Dialog.getNumber(); 
+endval = Dialog.getNumber(); 
+
+startval = 1;
+endval = 100;
+run("Z Project...", "start=" + startval + " stop=" + endval + " projection=[Average Intensity]");
 name2=getTitle;
 imageCalculator("Subtract create 32-bit stack", name1,name2);
 name3=getTitle;
@@ -65,3 +77,4 @@ doCommand("Start Animation [\\]");
 
 //close(name2);
 //close(name4);
+
