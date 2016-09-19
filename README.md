@@ -9,6 +9,6 @@ Learn more about the ImageJ macro language at [https://imagej.nih.gov/ij/develop
 
 Also please see the many useful example macros that come with every ImageJ installation under `ImageJ/macros`. Just open these txt files in your text editor (Sublime Text, Atom, etc) and inspect what they do. These examples are invaluable for helping you learn to write your own macros. Also Fiji (ImageJ 'with batteries included') has an interactive interpreter for quick copy/paste/run of macro commands under Menu Plugins --> Scripting --> Macro Interpreter that is very useful while you trying to implement a routine.
 
-* [ ] TODO: Add optional gui dialog box prompt that allows user to enter a start and end frame for calculating the mean baseline image *F0*.
-    * [ ] See `ImageJ/macros/DialogDemo.ijm` for dialog input examples
+* [x] TODO: Add optional gui dialog box prompt that allows user to enter a start and end frame for calculating the mean baseline image *F0*.
+    * [x] See `ImageJ/macros/DialogDemo.ijm` for dialog input examples
 * [ ] TODO: Consider merging and removing one of the existing functions (lots of redundancy right now)
