@@ -1,4 +1,5 @@
-//dF/F image stack, James B. Ackman 2012-02-14, update 2014-02-21 09:44:13
+//dF/F image stack, James B. Ackman 2012-02-14, update 2014-02-21 09:44:13, 
+// update 2016-09-19 by Sydney C. Weiser
 // this macro will (1) reduce an open image stack in half
 // (2) create an average image in the z-dimension
 // (3) calc dF/F image stack
@@ -7,7 +8,6 @@
 // Comment out lines 41-58 if you don't want to auto adjust the contrast
 
 useDialogBox = 1; // disable this if you'd prefer not to have a dialog box to select slice
-
 
 name1=getTitle;
 //selectWindow(name1)

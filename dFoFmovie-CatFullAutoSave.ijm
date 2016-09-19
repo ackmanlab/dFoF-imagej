@@ -7,6 +7,8 @@
 // (5) Auto save the average image in original directory
 // (6) Auto save an .avi movie in original directory
 
+
+useDialogBox = 0; // enable this if you'd prefer to have a dialog box to select slices
 var name1;
 var fnm;
 var id=1; //initial image id for filepath and image title
@@ -49,6 +51,20 @@ h=getHeight/2;
 if (halfsz>0) {
   run("Size...", "width=w height=h depth=n constrain interpolation=None"); 
 } 
+
+if (useDialogBox == 1) {
+  Dialog.create("Set dFoF Frame Range"); 
+  Dialog.addMessage("Set Start and End Frames"); 
+  Dialog.addNumber("Start:", 1); 
+  Dialog.addNumber("End:", n); 
+  Dialog.show(); 
+  startval = Dialog.getNumber(); 
+  endval = Dialog.getNumber(); 
+}
+else {
+  startval = 1;
+  endval = n;
+}
 
 nn2=replace(name1, ".tif", "_AVG.tif");
 fnm2=directory+nn2;
