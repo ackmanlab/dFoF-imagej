@@ -9,6 +9,7 @@
 
 
 useDialogBox = 0; // enable this if you'd prefer to have a dialog box to select slices
+writeAvi = 1; // enable for automatic .avi saving
 var name1;
 var fnm;
 var id=1; //initial image id for filepath and image title
@@ -31,7 +32,7 @@ function getNamePath(id) {
   selectImage(id);
   name1=getTitle;
   directory=getInfo("image.directory");  
-  nn=replace(name1, ".tif", "-dFoF-50fps.avi");  
+  nn=replace(name1, ".tif", "-dFoF.avi");  
   fnm=directory+nn;
   return name1;
   return fnm;
@@ -103,8 +104,11 @@ print("   new max: "+max);
 close(name1);
 close(name3);
 
-run("AVI... ", "compression=JPEG frame=50 save=&fnm");
-doCommand("Start Animation [\\]");
+
+if (writeAvi){
+  run("AVI... ", "compression=JPEG frame=50 save=&fnm");
+  doCommand("Start Animation [\\]");
+}
 
 //close(name2);
 //close(name4);

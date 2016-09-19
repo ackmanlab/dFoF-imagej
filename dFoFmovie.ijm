@@ -8,12 +8,13 @@
 // Comment out lines 41-58 if you don't want to auto adjust the contrast
 
 useDialogBox = 1; // disable this if you'd prefer not to have a dialog box to select slice
+writeAvi = 0; // enable for automatic .avi saving
 
 name1=getTitle;
 //selectWindow(name1)
 directory=getInfo("image.directory"); 
 //name=getInfo("image.filename"); 
-nn=replace(name1, ".tif", "-dFoF-50fps.avi"); 
+nn=replace(name1, ".tif", "-dFoF.avi"); 
 //nn=replace(name1, ".tif", "-dFoF-50fps-halfsz.avi"); 
 fnm=directory+nn; 
 //print(fnm)
@@ -78,8 +79,10 @@ print("   new max: "+max);
 close(name1);
 close(name3);
 
-run("AVI... ", "compression=JPEG frame=50 save=&fnm");
-doCommand("Start Animation [\\]");
+if (writeAvi){
+  run("AVI... ", "compression=JPEG frame=50 save=&fnm");
+	doCommand("Start Animation [\\]");
+}
 
 //close(name2);
 //close(name4);
